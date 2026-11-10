@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CapsuleOS</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">C</div>
+          <div>
+            <strong>CapsuleOS</strong>
+            <span>Reversible execution lab</span>
+          </div>
+        </div>
+        <nav>
+          <a href="#run" class="active">Run Capsule</a>
+          <a href="#capsules">Capsules</a>
+          <a href="#changes">Changes</a>
+          <a href="#report">Report</a>
+        </nav>
+        <div class="system-panel">
+          <span>System</span>
+          <strong id="cpuMetric">--</strong>
+          <small id="memoryMetric">Memory loading</small>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <h1>Run risky work inside a reversible capsule</h1>
+            <p>Launch a process, watch its child processes and file changes, then commit or roll back.</p>
+          </div>
+          <button id="refreshBtn" class="ghost">Refresh</button>
+        </header>
+
+        <section id="run" class="panel run-panel">
+          <div class="section-head">
+            <h2>New Capsule</h2>
+            <p>Use the safe demo command first, then try your own scripts.</p>
+          </div>
+          <form id="runForm">
+            <label>
+              Command
+              <input id="command" value="python demos/demo_writer.py" />
+            </label>
+            <label>
+              Working directory
+              <input id="cwd" />
+            </label>
+            <label>
+              Monitored paths
+              <textarea id="watchPaths" rows="3"></textarea>
+            </label>
+            <div class="form-grid form-grid-wide">
+              <label>
+                Memory limit MB
+                <input id="memoryLimit" type="number" min="16" placeholder="256" />
+              </label>
+              <label>
+                Runtime limit sec
+                <input id="runtimeLimit" type="number" min="1" placeholder="60" />
+              </label>
+              <label>
+                Priority
+                <select id="priority">
+                  <option value="normal">Normal</option>
+                  <option value="low">Low</option>
+                  <option value="idle">Idle</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+              <label>
+                Reversibility budget
+                <input id="reversibilityBudget" type="number" min="1" max="100" value="70" />
+              </label>
+            </div>
+            <label class="check-control">
+              <input id="autoSuspend" type="checkbox" checked />
+              Pause automatically before rollback becomes too costly
+            </label>
+            <button type="submit">Launch Capsule</button>
+          </form>
+        </section>
+
+        <section id="capsules" class="panel">
+          <div class="section-head">
+            <h2>Capsules</h2>
+            <p>Process state, risk, and containment controls.</p>
+          </div>
+          <div id="capsuleList" class="capsule-list"></div>
+        </section>
+
+        <section id="changes" class="panel">
+          <div class="section-head">
+            <div>
+              <h2>Journaled Changes</h2>
+              <p>Select the changes worth keeping. Unselected changes are reversed.</p>
+            </div>
+            <button id="commitSelectedBtn" class="ghost" disabled>Commit selected</button>
+          </div>
+          <div id="changeList" class="change-list empty">Select a capsule to inspect its journal.</div>
+        </section>
+
+        <section id="report" class="panel">
+          <div class="section-head">
+            <h2>Capsule Report</h2>
+            <p>Exportable evidence for the OS mechanism: processes, scheduling state, memory, file journal, and audit trail.</p>
+          </div>
+          <pre id="reportBox">{}</pre>
+        </section>
+      </main>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>

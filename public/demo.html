@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CapsuleOS Full Prototype Demo</title>
+    <link rel="stylesheet" href="/demo.css" />
+  </head>
+  <body>
+    <header class="demo-header">
+      <a class="brand" href="/demo" aria-label="CapsuleOS demo home">
+        <span class="brand-mark">C</span>
+        <span>
+          <strong>CapsuleOS</strong>
+          <small>Full prototype demo</small>
+        </span>
+      </a>
+      <a class="dashboard-link" href="/">Dashboard</a>
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="context">Operating systems project</p>
+        <h1>Every protected effect carries its own recovery proof.</h1>
+        <p>
+          This safe workload creates a process tree, seals recovery obligations before
+          protected writes, then verifies commit or rollback.
+        </p>
+      </section>
+
+      <section class="demo-shell" aria-live="polite">
+        <div class="run-header">
+          <div class="status-line">
+            <span id="statusDot" class="status-dot"></span>
+            <div>
+              <strong id="statusTitle">Ready for full demonstration</strong>
+              <p id="statusCopy">The laptop is unchanged. Start the guided run when ready.</p>
+            </div>
+          </div>
+          <button id="startBtn" type="button">Run full demo</button>
+        </div>
+
+        <ol class="stages" aria-label="Prototype workflow">
+          <li id="stageLaunch"><span>1</span><small>Launch</small></li>
+          <li id="stageObserve"><span>2</span><small>Seal</small></li>
+          <li id="stageGovern"><span>3</span><small>Execute</small></li>
+          <li id="stageDecide"><span>4</span><small>Decide</small></li>
+          <li id="stageRecover"><span>5</span><small>Recover</small></li>
+        </ol>
+
+        <div class="summary-grid">
+          <div>
+            <span>Process tree</span>
+            <strong id="processCount">0</strong>
+            <small>contained processes</small>
+          </div>
+          <div>
+            <span>Working set</span>
+            <strong id="memoryValue">0 MB</strong>
+            <small>live memory</small>
+          </div>
+          <div>
+            <span>Obligations</span>
+            <strong id="fileCount">0</strong>
+            <small>recovery records</small>
+          </div>
+          <div>
+            <span>Invariant</span>
+            <strong id="riskValue">Ready</strong>
+            <small id="riskLabel">no uncovered effects</small>
+          </div>
+        </div>
+
+        <section class="edge-envelope" aria-labelledby="edgeEnvelopeTitle">
+          <div class="edge-copy">
+            <p class="eyebrow">VM-alternative edge mode</p>
+            <h2 id="edgeEnvelopeTitle">Dynamic recovery-capacity envelope</h2>
+            <p>
+              Native execution shares the host kernel, but every protected effect must
+              fit the device's current recovery, flash and timing limits.
+            </p>
+          </div>
+          <dl class="edge-metrics">
+            <div><dt>Execution</dt><dd>Host native</dd><small>No guest OS</small></div>
+            <div><dt>Admission</dt><dd id="edgeDecision">Awaiting</dd><small id="edgeReason">Live decision</small></div>
+            <div><dt>Reserve left</dt><dd id="edgeReserve">-</dd><small>After operation</small></div>
+            <div><dt>Rollback</dt><dd id="edgeRollback">-</dd><small id="edgeDeadline">Bounded deadline</small></div>
+            <div><dt>Flash budget</dt><dd id="edgeFlash">-</dd><small>Write-aware</small></div>
+          </dl>
+        </section>
+
+        <section class="model-proof" aria-labelledby="modelProofTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Live admission gate</p>
+              <h2 id="modelProofTitle">One protected write, proven step by step</h2>
+            </div>
+            <span id="gateState" class="gate-state">Waiting for operation</span>
+          </div>
+          <ol class="proof-flow">
+            <li id="proofIntercept">
+              <span class="proof-index">1</span>
+              <strong>Intercept</strong>
+              <small id="proofInterceptValue">No request</small>
+            </li>
+            <li id="proofCapture">
+              <span class="proof-index">2</span>
+              <strong>Capture inverse</strong>
+              <small id="proofCaptureValue">Waiting</small>
+            </li>
+            <li id="proofSeal">
+              <span class="proof-index">3</span>
+              <strong>Durably seal</strong>
+              <small id="proofSealValue">Waiting</small>
+            </li>
+            <li id="proofAdmit">
+              <span class="proof-index">4</span>
+              <strong>Admit write</strong>
+              <small id="proofAdmitValue">Blocked</small>
+            </li>
+            <li id="proofVerify">
+              <span class="proof-index">5</span>
+              <strong>Verify recovery</strong>
+              <small id="proofVerifyValue">Pending decision</small>
+            </li>
+          </ol>
+        </section>
+
+        <div class="workbench">
+          <section>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Process management</p>
+                <h2>PCB and process tree</h2>
+              </div>
+              <span id="capsuleId" class="identifier">No capsule</span>
+            </div>
+            <div id="processList" class="empty-state">Process records will appear here.</div>
+          </section>
+
+          <section>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Pre-write admission</p>
+                <h2>Recovery obligations</h2>
+              </div>
+              <span id="journalState" class="identifier">Baseline ready</span>
+            </div>
+            <div id="changeList" class="empty-state">No persistent effect has requested admission.</div>
+          </section>
+        </div>
+
+        <div class="governor">
+          <section>
+            <p class="eyebrow">Scheduling and protection</p>
+            <div class="meter-labels">
+              <h2>Verified effect coverage</h2>
+              <strong><span id="debtValue">0</span> / <span id="budgetValue">0</span></strong>
+            </div>
+            <div
+              class="meter"
+              role="progressbar"
+              aria-label="Verified recovery coverage"
+              aria-valuemin="0"
+              aria-valuemax="1"
+              aria-valuenow="0"
+            >
+              <span id="meterFill"></span>
+            </div>
+            <p id="debtReason" class="supporting">The scheduler is waiting for a persistent effect.</p>
+          </section>
+
+          <section>
+            <p class="eyebrow">Runtime policy</p>
+            <dl class="policy">
+              <div><dt>Priority</dt><dd id="priorityValue">Normal</dd></div>
+              <div><dt>Memory limit</dt><dd id="memoryLimit">128 MB</dd></div>
+              <div><dt>Runtime limit</dt><dd id="runtimeLimit">30 sec</dd></div>
+              <div><dt>Persistence</dt><dd id="registryValue">Protected</dd></div>
+              <div><dt>Behavior baseline</dt><dd id="baselineState">Warming</dd></div>
+            </dl>
+          </section>
+        </div>
+
+        <section class="decision">
+          <div>
+            <p class="eyebrow">Control and decision</p>
+            <h2 id="decisionTitle">Actions unlock when changes are detected</h2>
+            <p id="decisionCopy">CapsuleOS can suspend, resume, commit, or reverse the complete process tree.</p>
+          </div>
+          <div class="actions">
+            <button id="controlBtn" class="secondary" type="button" disabled>Suspend process</button>
+            <button id="commitBtn" class="secondary" type="button" disabled>Keep changes</button>
+            <button id="rollbackBtn" class="danger" type="button" disabled>Roll back all</button>
+          </div>
+        </section>
+
+        <div class="footer-grid">
+          <section>
+            <p class="eyebrow">Admission findings</p>
+            <h2>Recovery invariant</h2>
+            <ul id="riskReasons" class="compact-list">
+              <li>No uncovered effect detected.</li>
+            </ul>
+          </section>
+          <section>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Verifiable evidence</p>
+                <h2>Audit trail</h2>
+              </div>
+              <button id="exportBtn" class="text-button" type="button" disabled>Export report</button>
+            </div>
+            <ol id="auditList" class="compact-list">
+              <li>Waiting for capsule launch.</li>
+            </ol>
+          </section>
+        </div>
+
+        <section id="resultBand" class="result-band" hidden>
+          <div>
+            <p class="eyebrow">Final verification</p>
+            <h2 id="resultTitle">Recovery report</h2>
+            <p id="resultCopy"></p>
+          </div>
+          <dl>
+            <div><dt>Final state</dt><dd id="finalState">-</dd></div>
+            <div><dt>Restored</dt><dd id="restoredCount">0</dd></div>
+            <div><dt>Removed</dt><dd id="removedCount">0</dd></div>
+            <div><dt>Audit events</dt><dd id="auditCount">0</dd></div>
+          </dl>
+        </section>
+      </section>
+
+      <aside class="talk-track">
+        <strong>OS concepts demonstrated</strong>
+        <p>
+          Processes and PCB, scheduling, memory monitoring, file-system journaling,
+          lightweight virtualization, edge-aware resource governance, and recovery.
+        </p>
+      </aside>
+    </main>
+
+    <script src="/demo.js"></script>
+  </body>
+</html>
